@@ -1,0 +1,9 @@
+/*
+    Foilen Infra Resource Url Redirection
+    https://github.com/foilen/foilen-infra-resource-urlredirection
+    Copyright (c) 2018 Foilen (http://foilen.com)
+
+    The MIT License
+    http://opensource.org/licenses/MIT
+
+ */
