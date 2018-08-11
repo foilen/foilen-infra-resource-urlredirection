@@ -38,6 +38,7 @@ dependencies {
 
   compileOnly "com.foilen:foilen-infra-resource-dns:0.1.1"
   compileOnly "com.foilen:foilen-infra-resource-machine:0.1.1"
+  compileOnly "com.foilen:foilen-infra-resource-webcertificate:0.1.0"
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {

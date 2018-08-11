@@ -31,6 +31,10 @@ public class FoilenUrlRedirectionPluginDefinitionProvider implements IPPluginDef
                         UrlRedirection.PROPERTY_HTTPS_REDIRECT_TO_URL //
                 ));
 
+        pluginDefinitionV1.addTranslations("/com/foilen/infra/resource/urlredirection/messages");
+
+        pluginDefinitionV1.addResourceEditor(new UrlRedirectionEditor(), UrlRedirectionEditor.EDITOR_NAME);
+
         pluginDefinitionV1.addUpdateHandler(new UrlRedirectionUpdateHandler());
 
         return pluginDefinitionV1;

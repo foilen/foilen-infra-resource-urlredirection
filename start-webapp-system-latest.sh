@@ -18,7 +18,7 @@ docker run -ti \
   --volume $FOLDER_PLUGINS_JARS:/plugins \
   foilen/foilen-infra-system-app-test-docker \
   download-latest-plugins \
-  /plugins dns machine
+  /plugins dns domain machine webcertificate
 
 # Create release
 ./create-local-release.sh
