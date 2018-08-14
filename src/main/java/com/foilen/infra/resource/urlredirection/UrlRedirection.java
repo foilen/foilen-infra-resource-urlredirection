@@ -24,7 +24,7 @@ import com.google.common.collect.ComparisonChain;
  *
  * Manages:
  * <ul>
- * <li>{DnsPointer: (optional / many) POINTS_TO - Some domain names that will automatically point to the {Machine}s on which it is INSTALLED_ON</li>
+ * <li>{Website: (1 per protocol) MANAGES - Website to handle the redirection</li>
  * </ul>
  */
 public class UrlRedirection extends AbstractIPResource implements Comparable<UrlRedirection> {

@@ -35,7 +35,9 @@ public class FoilenUrlRedirectionPluginDefinitionProvider implements IPPluginDef
 
         pluginDefinitionV1.addResourceEditor(new UrlRedirectionEditor(), UrlRedirectionEditor.EDITOR_NAME);
 
-        pluginDefinitionV1.addUpdateHandler(new UrlRedirectionUpdateHandler());
+        pluginDefinitionV1.addUpdateHandler(new AddRedirectionUnixUserUpdateHandler());
+        pluginDefinitionV1.addUpdateHandler(new RedirectionWithApacheUpdateHandler());
+        pluginDefinitionV1.addUpdateHandler(new WebsitesForUrlRedirectionUpdateHandler());
 
         return pluginDefinitionV1;
     }
