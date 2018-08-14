@@ -12,8 +12,6 @@ package com.foilen.infra.resource.urlredirection;
 import java.util.List;
 import java.util.Optional;
 
-import org.assertj.core.util.Strings;
-
 import com.foilen.infra.plugin.v1.core.context.CommonServicesContext;
 import com.foilen.infra.plugin.v1.core.eventhandler.AbstractFinalStateManagedResourcesEventHandler;
 import com.foilen.infra.plugin.v1.core.eventhandler.FinalStateManagedResource;
@@ -24,6 +22,7 @@ import com.foilen.infra.resource.application.Application;
 import com.foilen.infra.resource.machine.Machine;
 import com.foilen.infra.resource.webcertificate.WebsiteCertificate;
 import com.foilen.infra.resource.website.Website;
+import com.google.common.base.Strings;
 
 /**
  * For each UrlRedirection:

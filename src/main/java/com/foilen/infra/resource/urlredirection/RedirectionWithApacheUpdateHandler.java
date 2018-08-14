@@ -15,8 +15,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.assertj.core.util.Strings;
-
 import com.foilen.infra.plugin.v1.core.context.CommonServicesContext;
 import com.foilen.infra.plugin.v1.core.eventhandler.AbstractFinalStateManagedResourcesEventHandler;
 import com.foilen.infra.plugin.v1.core.eventhandler.FinalStateManagedResource;
@@ -31,6 +29,7 @@ import com.foilen.infra.resource.application.Application;
 import com.foilen.infra.resource.machine.Machine;
 import com.foilen.infra.resource.unixuser.UnixUser;
 import com.foilen.smalltools.tools.FreemarkerTools;
+import com.google.common.base.Strings;
 
 /**
  * For each Machine that has UrlRedirections to it:
