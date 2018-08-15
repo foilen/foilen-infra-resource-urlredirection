@@ -103,7 +103,7 @@ public class RedirectionWithApacheUpdateHandler extends AbstractFinalStateManage
         application.setApplicationDefinition(applicationDefinition);
         applicationDefinition.setRunAs(unixUserId);
 
-        applicationDefinition.setFrom("foilen/fcloud-docker-apache_php5:1.0.1");
+        applicationDefinition.setFrom("foilen/fcloud-docker-apache_php5:1.0.2");
 
         // Apache and PHP config
         IPApplicationDefinitionAssetsBundle assetsBundle = applicationDefinition.addAssetsBundle();

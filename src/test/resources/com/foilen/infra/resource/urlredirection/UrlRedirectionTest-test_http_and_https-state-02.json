@@ -86,7 +86,7 @@ echo Apache service is down
         "copyWhenStartedPathAndContentFiles" : [ ],
         "environments" : { },
         "executeWhenStartedCommands" : [ ],
-        "from" : "foilen/fcloud-docker-apache_php5:1.0.1",
+        "from" : "foilen/fcloud-docker-apache_php5:1.0.2",
         "hostToIpMapping" : [ ],
         "portsEndpoint" : {
           "8080" : "HTTP_TCP"
@@ -190,7 +190,7 @@ echo Apache service is down
         "copyWhenStartedPathAndContentFiles" : [ ],
         "environments" : { },
         "executeWhenStartedCommands" : [ ],
-        "from" : "foilen/fcloud-docker-apache_php5:1.0.1",
+        "from" : "foilen/fcloud-docker-apache_php5:1.0.2",
         "hostToIpMapping" : [ ],
         "portsEndpoint" : {
           "8080" : "HTTP_TCP"
