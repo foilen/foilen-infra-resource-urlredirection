@@ -16,7 +16,7 @@ docker run -ti \
   --env PLUGINS_JARS=/plugins \
   --user $USER_ID \
   --volume $FOLDER_PLUGINS_JARS:/plugins \
-  foilen-infra-system-app-test-docker:master-SNAPSHOT \
+  foilen/foilen-infra-system-app-test-docker \
   download-latest-plugins \
   /plugins application dns domain machine unixuser webcertificate website
 
@@ -27,10 +27,11 @@ cp build/libs/foilen-infra-resource-urlredirection-master-SNAPSHOT.jar $FOLDER_P
 # Start webapp
 docker run -ti \
   --rm \
+  --env FOILEN_PLUGIN_SKIP_UPDATE_EVENTS=true \
   --env PLUGINS_JARS=/plugins \
   --user $USER_ID \
   --volume $FOLDER_PLUGINS_JARS:/plugins \
   --publish 8080:8080 \
-  foilen-infra-system-app-test-docker:master-SNAPSHOT \
+  foilen/foilen-infra-system-app-test-docker \
   web --debug
 

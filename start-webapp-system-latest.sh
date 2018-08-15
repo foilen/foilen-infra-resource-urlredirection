@@ -21,7 +21,7 @@ docker run -ti \
   /plugins application dns domain machine unixuser webcertificate website
 
 # Create release
-./create-local-release.sh
+./create-local-release-no-tests.sh
 cp build/libs/foilen-infra-resource-urlredirection-master-SNAPSHOT.jar $FOLDER_PLUGINS_JARS
 
 # Start webapp

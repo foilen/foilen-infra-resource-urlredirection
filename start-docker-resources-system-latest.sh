@@ -9,6 +9,9 @@ cd $RUN_PATH
 FOLDER_PLUGINS_JARS=$(pwd)/_plugins-jars
 mkdir -p $FOLDER_PLUGINS_JARS
 
+# Prepare file
+FILE_IMPORT=$(pwd)/_exportFile.json
+
 # Download plugins
 USER_ID=$(id -u)
 docker run -ti \
@@ -16,7 +19,7 @@ docker run -ti \
   --env PLUGINS_JARS=/plugins \
   --user $USER_ID \
   --volume $FOLDER_PLUGINS_JARS:/plugins \
-  foilen-infra-system-app-test-docker:master-SNAPSHOT \
+  foilen/foilen-infra-system-app-test-docker \
   download-latest-plugins \
   /plugins application dns domain machine unixuser webcertificate website
 
@@ -24,13 +27,17 @@ docker run -ti \
 ./create-local-release-no-tests.sh
 cp build/libs/foilen-infra-resource-urlredirection-master-SNAPSHOT.jar $FOLDER_PLUGINS_JARS
 
-# Start webapp
+# Start resources
 docker run -ti \
   --rm \
+  --env HOSTFS=/hostfs/ \
   --env PLUGINS_JARS=/plugins \
-  --user $USER_ID \
+  --volume $FILE_IMPORT:/exportFile.json \
   --volume $FOLDER_PLUGINS_JARS:/plugins \
-  --publish 8080:8080 \
-  foilen-infra-system-app-test-docker:master-SNAPSHOT \
-  web --debug
-
+  --volume /etc:/hostfs/etc \
+  --volume /home:/hostfs/home \
+  --volume /usr/bin/docker:/usr/bin/docker \
+  --volume /usr/lib/x86_64-linux-gnu/libltdl.so.7.3.1:/usr/lib/x86_64-linux-gnu/libltdl.so.7 \
+  --volume /var/run/docker.sock:/var/run/docker.sock \
+  foilen/foilen-infra-system-app-test-docker \
+  start-resources /exportFile.json
