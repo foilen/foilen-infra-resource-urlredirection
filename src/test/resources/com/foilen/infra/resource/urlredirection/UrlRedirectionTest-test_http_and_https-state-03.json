@@ -104,6 +104,11 @@ echo Apache service is down
           "groupId" : 70000,
           "ownerId" : 70000,
           "permissions" : "755"
+        }, {
+          "containerFsFolder" : "/var/log/apache2",
+          "groupId" : 70000,
+          "ownerId" : 70000,
+          "permissions" : "755"
         } ]
       },
       "description" : "Apache HTTP URL redirections for h1.example.com",

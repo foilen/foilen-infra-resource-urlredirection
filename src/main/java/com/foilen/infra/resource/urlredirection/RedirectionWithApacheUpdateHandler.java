@@ -139,6 +139,7 @@ public class RedirectionWithApacheUpdateHandler extends AbstractFinalStateManage
         applicationDefinition.addBuildStepCommand("chmod 644 /etc/apache2/ports.conf ; chmod 755 /apache-start.sh");
 
         applicationDefinition.addVolume(new IPApplicationDefinitionVolume(null, "/var/lock/apache2", unixUserId, unixUserId, "755"));
+        applicationDefinition.addVolume(new IPApplicationDefinitionVolume(null, "/var/log/apache2", unixUserId, unixUserId, "755"));
 
         applicationDefinition.addContainerUserToChangeId("www-data", unixUserId);
 
