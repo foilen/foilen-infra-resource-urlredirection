@@ -114,6 +114,7 @@ echo Apache service is down
       "description" : "Apache HTTP URL redirections for h1.example.com",
       "domainNames" : [ ],
       "executionPolicy" : "ALWAYS_ON",
+      "meta" : { },
       "name" : "infra_url_redirection_http-h1_example_com",
       "resourceCategory" : "INFRASTRUCTURE",
       "resourceDescription" : "Apache HTTP URL redirections for h1.example.com",
@@ -220,6 +221,7 @@ backend http_8080_redir2.example.com
       "description" : "Web HA Proxy for h1.example.com",
       "domainNames" : [ ],
       "executionPolicy" : "ALWAYS_ON",
+      "meta" : { },
       "name" : "infra_web-h1_example_com",
       "resourceCategory" : "INFRASTRUCTURE",
       "resourceDescription" : "Web HA Proxy for h1.example.com",
@@ -234,6 +236,7 @@ backend http_8080_redir2.example.com
     "tags" : [ ],
     "content" : {
       "details" : "192.168.0.200",
+      "meta" : { },
       "name" : "h1.example.com",
       "resourceCategory" : "NET",
       "resourceDescription" : "192.168.0.200",
@@ -249,6 +252,7 @@ backend http_8080_redir2.example.com
     "tags" : [ ],
     "content" : {
       "details" : "192.168.0.200",
+      "meta" : { },
       "name" : "redir.example.com",
       "resourceCategory" : "NET",
       "resourceDescription" : "192.168.0.200",
@@ -264,6 +268,7 @@ backend http_8080_redir2.example.com
     "tags" : [ ],
     "content" : {
       "details" : "192.168.0.200",
+      "meta" : { },
       "name" : "redir2.example.com",
       "resourceCategory" : "NET",
       "resourceDescription" : "192.168.0.200",
@@ -281,6 +286,7 @@ backend http_8080_redir2.example.com
     } ],
     "tags" : [ ],
     "content" : {
+      "meta" : { },
       "name" : "redir.example.com",
       "resourceCategory" : "NET",
       "resourceDescription" : "redir.example.com",
@@ -297,6 +303,7 @@ backend http_8080_redir2.example.com
     } ],
     "tags" : [ ],
     "content" : {
+      "meta" : { },
       "name" : "redir2.example.com",
       "resourceCategory" : "NET",
       "resourceDescription" : "redir2.example.com",
@@ -307,6 +314,7 @@ backend http_8080_redir2.example.com
     "links" : [ ],
     "tags" : [ ],
     "content" : {
+      "meta" : { },
       "name" : "example.com",
       "resourceCategory" : "NET",
       "resourceDescription" : "Domain for example.com",
@@ -321,6 +329,7 @@ backend http_8080_redir2.example.com
     } ],
     "tags" : [ ],
     "content" : {
+      "meta" : { },
       "name" : "h1.example.com",
       "resourceCategory" : "NET",
       "resourceDescription" : "Domain for h1.example.com",
@@ -335,6 +344,7 @@ backend http_8080_redir2.example.com
     } ],
     "tags" : [ ],
     "content" : {
+      "meta" : { },
       "name" : "redir.example.com",
       "resourceCategory" : "NET",
       "resourceDescription" : "Domain for redir.example.com",
@@ -349,6 +359,7 @@ backend http_8080_redir2.example.com
     } ],
     "tags" : [ ],
     "content" : {
+      "meta" : { },
       "name" : "redir2.example.com",
       "resourceCategory" : "NET",
       "resourceDescription" : "Domain for redir2.example.com",
@@ -366,6 +377,7 @@ backend http_8080_redir2.example.com
     } ],
     "tags" : [ ],
     "content" : {
+      "meta" : { },
       "name" : "h1.example.com",
       "publicIp" : "192.168.0.200",
       "resourceCategory" : "INFRASTRUCTURE",
@@ -379,10 +391,13 @@ backend http_8080_redir2.example.com
     "content" : {
       "homeFolder" : "/home/infra_url_redirection",
       "id" : 70000,
+      "keepClearPassword" : false,
+      "meta" : { },
       "name" : "infra_url_redirection",
       "resourceCategory" : "INFRASTRUCTURE",
       "resourceDescription" : "/home/infra_url_redirection",
-      "resourceName" : "infra_url_redirection"
+      "resourceName" : "infra_url_redirection",
+      "shell" : "/bin/bash"
     }
   }, {
     "resource" : "UnixUser | infra_web | /home/infra_web",
@@ -391,10 +406,13 @@ backend http_8080_redir2.example.com
     "content" : {
       "homeFolder" : "/home/infra_web",
       "id" : 70001,
+      "keepClearPassword" : false,
+      "meta" : { },
       "name" : "infra_web",
       "resourceCategory" : "INFRASTRUCTURE",
       "resourceDescription" : "/home/infra_web",
-      "resourceName" : "infra_web"
+      "resourceName" : "infra_web",
+      "shell" : "/bin/bash"
     }
   }, {
     "resource" : "UrlRedirection | redir.example.com | Redirection to http://google.com",
@@ -411,6 +429,7 @@ backend http_8080_redir2.example.com
       "httpIsPermanent" : false,
       "httpRedirectToUrl" : "http://google.com",
       "httpsIsPermanent" : false,
+      "meta" : { },
       "resourceCategory" : "NET",
       "resourceDescription" : "Redirection to http://google.com",
       "resourceName" : "redir.example.com"
@@ -430,6 +449,7 @@ backend http_8080_redir2.example.com
       "httpIsPermanent" : false,
       "httpRedirectToUrl" : "http://example.com",
       "httpsIsPermanent" : false,
+      "meta" : { },
       "resourceCategory" : "NET",
       "resourceDescription" : "Redirection to http://example.com",
       "resourceName" : "redir2.example.com"
@@ -451,6 +471,7 @@ backend http_8080_redir2.example.com
       "applicationEndpoint" : "HTTP_TCP",
       "domainNames" : [ "redir.example.com" ],
       "https" : false,
+      "meta" : { },
       "name" : "HTTP Redirection of redir.example.com",
       "resourceCategory" : "NET",
       "resourceDescription" : "redir.example.com",
@@ -473,6 +494,7 @@ backend http_8080_redir2.example.com
       "applicationEndpoint" : "HTTP_TCP",
       "domainNames" : [ "redir2.example.com" ],
       "https" : false,
+      "meta" : { },
       "name" : "HTTP Redirection of redir2.example.com",
       "resourceCategory" : "NET",
       "resourceDescription" : "redir2.example.com",
@@ -497,6 +519,7 @@ dCDHsURJ4EwPujnW00zcc1pF043SSd8LUdgG74wcWdLQLTJtWEH4IgVSndc0cLHJ
 ",
       "domainNames" : [ ],
       "end" : 1565660527000,
+      "meta" : { },
       "privateKey" : "-----BEGIN RSA PRIVATE KEY-----
 MIICXAIBAAKBgQDQyMFCQFBiiVtmCPVMeZFMpJW+GjdsG1b6Pl+58ZMsoYZizJOM
 gztwgFNtVn91k4CFll1s9oH2pHWWW8k077LhboXwKgNGrMiDiY6+Itx/8JZp/5aj
