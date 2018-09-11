@@ -40,7 +40,7 @@ public class UrlRedirectionTest extends AbstractIPPluginTest {
     public void test_http_and_https() {
 
         // Create resources
-        Machine machine = new Machine("h1.example.com", "192.168.0.200");
+        Machine machine1 = new Machine("h1.example.com", "192.168.0.200");
 
         UrlRedirection urlRedirection = new UrlRedirection();
         urlRedirection.setDomainName("redir.example.com");
@@ -52,12 +52,12 @@ public class UrlRedirectionTest extends AbstractIPPluginTest {
 
         IPResourceService resourceService = getCommonServicesContext().getResourceService();
         ChangesContext changes = new ChangesContext(resourceService);
-        changes.resourceAdd(machine);
+        changes.resourceAdd(machine1);
         changes.resourceAdd(urlRedirection);
         changes.resourceAdd(websiteCertificate);
 
         // Create links
-        changes.linkAdd(urlRedirection, LinkTypeConstants.INSTALLED_ON, machine);
+        changes.linkAdd(urlRedirection, LinkTypeConstants.INSTALLED_ON, machine1);
         changes.linkAdd(urlRedirection, LinkTypeConstants.USES, websiteCertificate);
 
         // Execute
@@ -72,7 +72,7 @@ public class UrlRedirectionTest extends AbstractIPPluginTest {
         urlRedirection.setHttpRedirectToUrl("http://example.com");
         changes.clear();
         changes.resourceAdd(urlRedirection);
-        changes.linkAdd(urlRedirection, LinkTypeConstants.INSTALLED_ON, machine);
+        changes.linkAdd(urlRedirection, LinkTypeConstants.INSTALLED_ON, machine1);
         getInternalServicesContext().getInternalChangeService().changesExecute(changes);
         JunitsHelper.assertState(getCommonServicesContext(), getInternalServicesContext(), "UrlRedirectionTest-test_http_and_https-state-02.json", getClass(), true);
 
@@ -84,6 +84,32 @@ public class UrlRedirectionTest extends AbstractIPPluginTest {
         changes.linkDelete(urlRedirection, LinkTypeConstants.USES, websiteCertificate);
         getInternalServicesContext().getInternalChangeService().changesExecute(changes);
         JunitsHelper.assertState(getCommonServicesContext(), getInternalServicesContext(), "UrlRedirectionTest-test_http_and_https-state-03.json", getClass(), true);
+
+        // Add a machine
+        Machine machine2 = new Machine("h2.example.com", "192.168.0.202");
+        changes.clear();
+        changes.resourceAdd(machine2);
+        getInternalServicesContext().getInternalChangeService().changesExecute(changes);
+        JunitsHelper.assertState(getCommonServicesContext(), getInternalServicesContext(), "UrlRedirectionTest-test_http_and_https-state-04.json", getClass(), true);
+
+        // Install a redirection on the new machine
+        changes.clear();
+        changes.linkAdd(urlRedirection, LinkTypeConstants.INSTALLED_ON, machine2);
+        getInternalServicesContext().getInternalChangeService().changesExecute(changes);
+        JunitsHelper.assertState(getCommonServicesContext(), getInternalServicesContext(), "UrlRedirectionTest-test_http_and_https-state-05.json", getClass(), true);
+
+        // Remove the redirection from the new machine
+        changes.clear();
+        changes.linkDelete(urlRedirection, LinkTypeConstants.INSTALLED_ON, machine2);
+        getInternalServicesContext().getInternalChangeService().changesExecute(changes);
+        JunitsHelper.assertState(getCommonServicesContext(), getInternalServicesContext(), "UrlRedirectionTest-test_http_and_https-state-04.json", getClass(), true);
+
+        // Remove all redirections
+        changes.clear();
+        resourceService.resourceFindAll(resourceService.createResourceQuery(UrlRedirection.class)).forEach(it -> changes.resourceDelete(it));
+        getInternalServicesContext().getInternalChangeService().changesExecute(changes);
+        JunitsHelper.assertState(getCommonServicesContext(), getInternalServicesContext(), "UrlRedirectionTest-test_http_and_https-state-06.json", getClass(), true);
+
     }
 
 }
