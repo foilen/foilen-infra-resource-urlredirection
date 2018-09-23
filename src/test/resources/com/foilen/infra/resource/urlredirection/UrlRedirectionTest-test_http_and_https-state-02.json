@@ -48,7 +48,7 @@ echo Apache service is down
     CustomLog /var/log/apache2/redir.example.com-access.log combined
     
     RewriteEngine On
-    RewriteRule /.* http://google.com [R,L]
+    RewriteRule /(.*) http://google.com/$1 [R,L]
 </VirtualHost>
 
 <VirtualHost *>
@@ -59,7 +59,7 @@ echo Apache service is down
     CustomLog /var/log/apache2/redir2.example.com-access.log combined
     
     RewriteEngine On
-    RewriteRule /.* http://example.com [R,L]
+    RewriteRule /(.*) http://example.com/$1 [R,L]
 </VirtualHost>
 
 "
@@ -169,7 +169,7 @@ echo Apache service is down
     CustomLog /var/log/apache2/redir.example.com-access.log combined
     
     RewriteEngine On
-    RewriteRule /.* https://google.com [R,L]
+    RewriteRule /(.*) https://google.com/$1 [R,L]
 </VirtualHost>
 
 "

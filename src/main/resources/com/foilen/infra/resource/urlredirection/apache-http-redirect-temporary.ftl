@@ -6,5 +6,5 @@
     CustomLog /var/log/apache2/${domainName}-access.log combined
     
     RewriteEngine On
-    RewriteRule /.* ${redirectionUrl} [R,L]
+    RewriteRule /(.*) ${redirectionUrl}/$1 [R,L]
 </VirtualHost>
