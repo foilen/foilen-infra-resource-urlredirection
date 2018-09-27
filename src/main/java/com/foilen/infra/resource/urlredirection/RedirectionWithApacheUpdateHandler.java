@@ -116,13 +116,36 @@ public class RedirectionWithApacheUpdateHandler extends AbstractFinalStateManage
         urlRedirections.forEach(urlRedirection -> {
             model.put("domainName", urlRedirection.getDomainName());
             boolean isPermanent;
+            String redirectionUrl;
             if (isHttps) {
-                model.put("redirectionUrl", urlRedirection.getHttpsRedirectToUrl());
+                redirectionUrl = urlRedirection.getHttpsRedirectToUrl();
                 isPermanent = urlRedirection.isHttpsIsPermanent();
             } else {
                 isPermanent = urlRedirection.isHttpIsPermanent();
-                model.put("redirectionUrl", urlRedirection.getHttpRedirectToUrl());
+                redirectionUrl = urlRedirection.getHttpRedirectToUrl();
             }
+
+            // Adjust redirectionUrl
+            int endOfProtocolPos = redirectionUrl.indexOf("://");
+            boolean redirectionIsExact = false;
+            String urlWithoutProtocol = redirectionUrl.substring(endOfProtocolPos + 3);
+            String[] parts = urlWithoutProtocol.split("/", 3);
+            if (parts.length == 1) {
+                // Is just the domain
+                while (redirectionUrl.endsWith("//")) {
+                    redirectionUrl = redirectionUrl.substring(0, redirectionUrl.length() - 1);
+                }
+                if (!redirectionUrl.endsWith("/")) {
+                    redirectionUrl += "/";
+                }
+
+            } else {
+                if (!redirectionUrl.endsWith("/")) {
+                    redirectionIsExact = true;
+                }
+            }
+            model.put("redirectionUrl", redirectionUrl);
+            model.put("redirectionIsExact", redirectionIsExact);
 
             logger.info("Adding https: {}; isPermanent: {}; model: {}", isHttps, isPermanent, model);
             if (isPermanent) {

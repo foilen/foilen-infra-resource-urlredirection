@@ -37,6 +37,16 @@ public class UrlRedirectionTest extends AbstractIPPluginTest {
     }
 
     @Test
+    public void test_exact_sub_directory_perm() {
+        testRedirConfig("https://www.example.com/exact", true, "UrlRedirectionTest-test_exact_sub_directory_perm.json");
+    }
+
+    @Test
+    public void test_exact_sub_directory_temp() {
+        testRedirConfig("https://www.example.com/exact", false, "UrlRedirectionTest-test_exact_sub_directory_temp.json");
+    }
+
+    @Test
     public void test_http_and_https() {
 
         // Create resources
@@ -109,6 +119,68 @@ public class UrlRedirectionTest extends AbstractIPPluginTest {
         resourceService.resourceFindAll(resourceService.createResourceQuery(UrlRedirection.class)).forEach(it -> changes.resourceDelete(it));
         getInternalServicesContext().getInternalChangeService().changesExecute(changes);
         JunitsHelper.assertState(getCommonServicesContext(), getInternalServicesContext(), "UrlRedirectionTest-test_http_and_https-state-06.json", getClass(), true);
+
+    }
+
+    @Test
+    public void test_keep_rest_domain_perm() {
+        testRedirConfig("https://www.example.com", true, "UrlRedirectionTest-test_keep_rest_domain_perm.json");
+    }
+
+    @Test
+    public void test_keep_rest_domain_perm_endSlash() {
+        testRedirConfig("https://www.example.com/", true, "UrlRedirectionTest-test_keep_rest_domain_perm_endSlash.json");
+    }
+
+    @Test
+    public void test_keep_rest_domain_temp() {
+        testRedirConfig("https://www.example.com", false, "UrlRedirectionTest-test_keep_rest_domain_temp.json");
+    }
+
+    @Test
+    public void test_keep_rest_domain_temp_endSlash() {
+        testRedirConfig("https://www.example.com/", false, "UrlRedirectionTest-test_keep_rest_domain_temp_endSlash.json");
+    }
+
+    @Test
+    public void test_keep_rest_sub_directory_perm() {
+        testRedirConfig("https://www.example.com/sub/", true, "UrlRedirectionTest-test_keep_rest_sub_directory_perm.json");
+    }
+
+    @Test
+    public void test_keep_rest_sub_directory_temp() {
+        testRedirConfig("https://www.example.com/sub/", false, "UrlRedirectionTest-test_keep_rest_sub_directory_temp.json");
+    }
+
+    private void testRedirConfig(String url, boolean isPermanent, String expectedJson) {
+        // Create resources
+        Machine machine1 = new Machine("h1.example.com", "192.168.0.200");
+
+        UrlRedirection urlRedirection = new UrlRedirection();
+        urlRedirection.setDomainName("redir.example.com");
+        urlRedirection.setHttpRedirectToUrl(url);
+        urlRedirection.setHttpsRedirectToUrl(url);
+        urlRedirection.setHttpIsPermanent(isPermanent);
+        urlRedirection.setHttpsIsPermanent(isPermanent);
+
+        RSACertificate rsaCertificate = RSACertificate.loadPemFromString(ResourceTools.getResourceAsString("cert.pem", getClass()));
+        WebsiteCertificate websiteCertificate = CertificateHelper.toWebsiteCertificate(null, rsaCertificate);
+
+        IPResourceService resourceService = getCommonServicesContext().getResourceService();
+        ChangesContext changes = new ChangesContext(resourceService);
+        changes.resourceAdd(machine1);
+        changes.resourceAdd(urlRedirection);
+        changes.resourceAdd(websiteCertificate);
+
+        // Create links
+        changes.linkAdd(urlRedirection, LinkTypeConstants.INSTALLED_ON, machine1);
+        changes.linkAdd(urlRedirection, LinkTypeConstants.USES, websiteCertificate);
+
+        // Execute
+        getInternalServicesContext().getInternalChangeService().changesExecute(changes);
+
+        // Assert
+        JunitsHelper.assertState(getCommonServicesContext(), getInternalServicesContext(), expectedJson, getClass(), true);
 
     }
 

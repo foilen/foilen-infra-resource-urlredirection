@@ -48,18 +48,7 @@ echo Apache service is down
     CustomLog /var/log/apache2/redir.example.com-access.log combined
     
     RewriteEngine On
-    RewriteRule /(.*) http://google.com/$1 [R,L]
-</VirtualHost>
-
-<VirtualHost *>
-    ServerName redir2.example.com
-    ServerAlias redir2.example.com
-    
-    ErrorLog /var/log/apache2/redir2.example.com-error.log
-    CustomLog /var/log/apache2/redir2.example.com-access.log combined
-    
-    RewriteEngine On
-    RewriteRule /(.*) http://example.com/$1 [R,L]
+    RewriteRule /.* https://www.example.com/exact [R=301,L]
 </VirtualHost>
 
 "
@@ -169,7 +158,7 @@ echo Apache service is down
     CustomLog /var/log/apache2/redir.example.com-access.log combined
     
     RewriteEngine On
-    RewriteRule /(.*) https://google.com/$1 [R,L]
+    RewriteRule /.* https://www.example.com/exact [R=301,L]
 </VirtualHost>
 
 "
@@ -305,28 +294,20 @@ frontend port_8080
   reqadd X-Forwarded-Proto:\\ http
 
   acl http_8080_redir.example.com hdr(host) -i redir.example.com
-  acl http_8080_redir2.example.com hdr(host) -i redir2.example.com
 
   use_backend http_8080_redir.example.com if http_8080_redir.example.com
-  use_backend http_8080_redir2.example.com if http_8080_redir2.example.com
 
 backend https_4433_redir.example.com
   option httpclose
   option forwardfor
   mode http
-  server https_4433_redir.example.com_1 127.0.0.1:10002 check
+  server https_4433_redir.example.com_1 127.0.0.1:10001 check
 
 backend http_8080_redir.example.com
   option httpclose
   option forwardfor
   mode http
   server http_8080_redir.example.com_1 127.0.0.1:10000 check
-
-backend http_8080_redir2.example.com
-  option httpclose
-  option forwardfor
-  mode http
-  server http_8080_redir2.example.com_1 127.0.0.1:10001 check
 
 "
           } ]
@@ -359,13 +340,6 @@ backend http_8080_redir2.example.com
           "toMachine" : "localhost"
         }, {
           "localPort" : 10001,
-          "machineContainerEndpoint" : "localhost/infra_url_redirection_http-h1_example_com/HTTP_TCP",
-          "toContainerName" : "infra_url_redirection_http-h1_example_com",
-          "toEndpoint" : "HTTP_TCP",
-          "toLocalMachine" : true,
-          "toMachine" : "localhost"
-        }, {
-          "localPort" : 10002,
           "machineContainerEndpoint" : "localhost/infra_url_redirection_https-h1_example_com/HTTP_TCP",
           "toContainerName" : "infra_url_redirection_https-h1_example_com",
           "toEndpoint" : "HTTP_TCP",
@@ -422,22 +396,6 @@ backend http_8080_redir2.example.com
       "type" : "A"
     }
   }, {
-    "resource" : "DnsEntry | redir2.example.com / A | 192.168.0.200",
-    "links" : [ {
-      "type" : "MANAGES",
-      "to" : "Domain | redir2.example.com | Domain for redir2.example.com"
-    } ],
-    "tags" : [ ],
-    "content" : {
-      "details" : "192.168.0.200",
-      "meta" : { },
-      "name" : "redir2.example.com",
-      "resourceCategory" : "NET",
-      "resourceDescription" : "192.168.0.200",
-      "resourceName" : "redir2.example.com / A",
-      "type" : "A"
-    }
-  }, {
     "resource" : "DnsPointer | redir.example.com | redir.example.com",
     "links" : [ {
       "type" : "MANAGES",
@@ -453,23 +411,6 @@ backend http_8080_redir2.example.com
       "resourceCategory" : "NET",
       "resourceDescription" : "redir.example.com",
       "resourceName" : "redir.example.com"
-    }
-  }, {
-    "resource" : "DnsPointer | redir2.example.com | redir2.example.com",
-    "links" : [ {
-      "type" : "MANAGES",
-      "to" : "DnsEntry | redir2.example.com / A | 192.168.0.200"
-    }, {
-      "type" : "POINTS_TO",
-      "to" : "Machine | h1.example.com | h1.example.com (192.168.0.200)"
-    } ],
-    "tags" : [ ],
-    "content" : {
-      "meta" : { },
-      "name" : "redir2.example.com",
-      "resourceCategory" : "NET",
-      "resourceDescription" : "redir2.example.com",
-      "resourceName" : "redir2.example.com"
     }
   }, {
     "resource" : "Domain | example.com | Domain for example.com",
@@ -512,21 +453,6 @@ backend http_8080_redir2.example.com
       "resourceDescription" : "Domain for redir.example.com",
       "resourceName" : "redir.example.com",
       "reverseName" : "com.example.redir"
-    }
-  }, {
-    "resource" : "Domain | redir2.example.com | Domain for redir2.example.com",
-    "links" : [ {
-      "type" : "MANAGES",
-      "to" : "Domain | example.com | Domain for example.com"
-    } ],
-    "tags" : [ ],
-    "content" : {
-      "meta" : { },
-      "name" : "redir2.example.com",
-      "resourceCategory" : "NET",
-      "resourceDescription" : "Domain for redir2.example.com",
-      "resourceName" : "redir2.example.com",
-      "reverseName" : "com.example.redir2"
     }
   }, {
     "resource" : "Machine | h1.example.com | h1.example.com (192.168.0.200)",
@@ -580,7 +506,7 @@ backend http_8080_redir2.example.com
       "shell" : "/bin/bash"
     }
   }, {
-    "resource" : "UrlRedirection | redir.example.com | Redirection to http://google.com, https://google.com",
+    "resource" : "UrlRedirection | redir.example.com | Redirection to https://www.example.com/exact, https://www.example.com/exact",
     "links" : [ {
       "type" : "INSTALLED_ON",
       "to" : "Machine | h1.example.com | h1.example.com (192.168.0.200)"
@@ -597,34 +523,14 @@ backend http_8080_redir2.example.com
     "tags" : [ ],
     "content" : {
       "domainName" : "redir.example.com",
-      "httpIsPermanent" : false,
-      "httpRedirectToUrl" : "http://google.com",
-      "httpsIsPermanent" : false,
-      "httpsRedirectToUrl" : "https://google.com",
+      "httpIsPermanent" : true,
+      "httpRedirectToUrl" : "https://www.example.com/exact",
+      "httpsIsPermanent" : true,
+      "httpsRedirectToUrl" : "https://www.example.com/exact",
       "meta" : { },
       "resourceCategory" : "NET",
-      "resourceDescription" : "Redirection to http://google.com, https://google.com",
+      "resourceDescription" : "Redirection to https://www.example.com/exact, https://www.example.com/exact",
       "resourceName" : "redir.example.com"
-    }
-  }, {
-    "resource" : "UrlRedirection | redir2.example.com | Redirection to http://example.com",
-    "links" : [ {
-      "type" : "INSTALLED_ON",
-      "to" : "Machine | h1.example.com | h1.example.com (192.168.0.200)"
-    }, {
-      "type" : "MANAGES",
-      "to" : "Website | HTTP Redirection of redir2.example.com | redir2.example.com"
-    } ],
-    "tags" : [ ],
-    "content" : {
-      "domainName" : "redir2.example.com",
-      "httpIsPermanent" : false,
-      "httpRedirectToUrl" : "http://example.com",
-      "httpsIsPermanent" : false,
-      "meta" : { },
-      "resourceCategory" : "NET",
-      "resourceDescription" : "Redirection to http://example.com",
-      "resourceName" : "redir2.example.com"
     }
   }, {
     "resource" : "Website | HTTP Redirection of redir.example.com | redir.example.com",
@@ -648,29 +554,6 @@ backend http_8080_redir2.example.com
       "resourceCategory" : "NET",
       "resourceDescription" : "redir.example.com",
       "resourceName" : "HTTP Redirection of redir.example.com"
-    }
-  }, {
-    "resource" : "Website | HTTP Redirection of redir2.example.com | redir2.example.com",
-    "links" : [ {
-      "type" : "INSTALLED_ON",
-      "to" : "Machine | h1.example.com | h1.example.com (192.168.0.200)"
-    }, {
-      "type" : "MANAGES",
-      "to" : "DnsPointer | redir2.example.com | redir2.example.com"
-    }, {
-      "type" : "POINTS_TO",
-      "to" : "Application | infra_url_redirection_http-h1_example_com | Apache HTTP URL redirections for h1.example.com"
-    } ],
-    "tags" : [ ],
-    "content" : {
-      "applicationEndpoint" : "HTTP_TCP",
-      "domainNames" : [ "redir2.example.com" ],
-      "https" : false,
-      "meta" : { },
-      "name" : "HTTP Redirection of redir2.example.com",
-      "resourceCategory" : "NET",
-      "resourceDescription" : "redir2.example.com",
-      "resourceName" : "HTTP Redirection of redir2.example.com"
     }
   }, {
     "resource" : "Website | HTTPS Redirection of redir.example.com | redir.example.com",

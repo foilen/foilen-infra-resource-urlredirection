@@ -6,5 +6,9 @@
     CustomLog /var/log/apache2/${domainName}-access.log combined
     
     RewriteEngine On
-    RewriteRule /(.*) ${redirectionUrl}/$1 [R=301,L]
+<#if redirectionIsExact>
+    RewriteRule /.* ${redirectionUrl} [R=301,L]
+<#else>
+    RewriteRule /(.*) ${redirectionUrl}$1 [R=301,L]
+</#if>
 </VirtualHost>

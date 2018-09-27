@@ -255,8 +255,9 @@ echo Apache service is down
 
 defaults
   timeout connect 5000
-  timeout client 50000
-  timeout server 50000
+  timeout client 600000
+  timeout server 600000
+  timeout tunnel 600000
 
 frontend port_8080
   mode http
@@ -362,8 +363,9 @@ backend http_8080_redir2.example.com
 
 defaults
   timeout connect 5000
-  timeout client 50000
-  timeout server 50000
+  timeout client 600000
+  timeout server 600000
+  timeout tunnel 600000
 
 frontend port_8080
   mode http

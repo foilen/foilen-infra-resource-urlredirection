@@ -273,8 +273,9 @@ JtavrooA9u3StQ+DNg0CQCjKbBC3dCjnUwJUQ3tGrscfnGA+Vs68D7V2I3Q0KKZk
 
 defaults
   timeout connect 5000
-  timeout client 50000
-  timeout server 50000
+  timeout client 600000
+  timeout server 600000
+  timeout tunnel 600000
 
 frontend port_4433
   mode http
