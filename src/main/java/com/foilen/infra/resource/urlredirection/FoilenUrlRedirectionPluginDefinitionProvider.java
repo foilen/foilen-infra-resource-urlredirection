@@ -21,7 +21,7 @@ public class FoilenUrlRedirectionPluginDefinitionProvider implements IPPluginDef
     public IPPluginDefinitionV1 getIPPluginDefinition() {
         IPPluginDefinitionV1 pluginDefinitionV1 = new IPPluginDefinitionV1("Foilen", "Url Redirection", "To manage url redirections", "1.0.0");
 
-        pluginDefinitionV1.addCustomResource(UrlRedirection.class, "Url Redirection", //
+        pluginDefinitionV1.addCustomResource(UrlRedirection.class, UrlRedirection.RESOURCE_TYPE, //
                 Arrays.asList( //
                         UrlRedirection.PROPERTY_DOMAIN_NAME //
                 ), //

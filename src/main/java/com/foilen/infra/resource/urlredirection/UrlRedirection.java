@@ -29,6 +29,8 @@ import com.google.common.collect.ComparisonChain;
  */
 public class UrlRedirection extends AbstractIPResource implements Comparable<UrlRedirection> {
 
+    public static final String RESOURCE_TYPE = "Url Redirection";
+
     public static final String PROPERTY_DOMAIN_NAME = "domainName";
     public static final String PROPERTY_HTTP_REDIRECT_TO_URL = "httpRedirectToUrl";
     public static final String PROPERTY_HTTP_IS_PERMANENT = "httpIsPermanent";
