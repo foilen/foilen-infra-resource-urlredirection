@@ -1,10 +1,7 @@
 {
   "resources" : [ {
     "resource" : "DnsEntry | h1.example.com / A | 192.168.0.200",
-    "links" : [ {
-      "type" : "MANAGES",
-      "to" : "Domain | h1.example.com | Domain for h1.example.com"
-    } ],
+    "links" : [ ],
     "tags" : [ ],
     "content" : {
       "details" : "192.168.0.200",
@@ -17,10 +14,7 @@
     }
   }, {
     "resource" : "DnsEntry | h2.example.com / A | 192.168.0.202",
-    "links" : [ {
-      "type" : "MANAGES",
-      "to" : "Domain | h2.example.com | Domain for h2.example.com"
-    } ],
+    "links" : [ ],
     "tags" : [ ],
     "content" : {
       "details" : "192.168.0.202",
@@ -30,48 +24,6 @@
       "resourceDescription" : "192.168.0.202",
       "resourceName" : "h2.example.com / A",
       "type" : "A"
-    }
-  }, {
-    "resource" : "Domain | example.com | Domain for example.com",
-    "links" : [ ],
-    "tags" : [ ],
-    "content" : {
-      "meta" : { },
-      "name" : "example.com",
-      "resourceCategory" : "NET",
-      "resourceDescription" : "Domain for example.com",
-      "resourceName" : "example.com",
-      "reverseName" : "com.example"
-    }
-  }, {
-    "resource" : "Domain | h1.example.com | Domain for h1.example.com",
-    "links" : [ {
-      "type" : "MANAGES",
-      "to" : "Domain | example.com | Domain for example.com"
-    } ],
-    "tags" : [ ],
-    "content" : {
-      "meta" : { },
-      "name" : "h1.example.com",
-      "resourceCategory" : "NET",
-      "resourceDescription" : "Domain for h1.example.com",
-      "resourceName" : "h1.example.com",
-      "reverseName" : "com.example.h1"
-    }
-  }, {
-    "resource" : "Domain | h2.example.com | Domain for h2.example.com",
-    "links" : [ {
-      "type" : "MANAGES",
-      "to" : "Domain | example.com | Domain for example.com"
-    } ],
-    "tags" : [ ],
-    "content" : {
-      "meta" : { },
-      "name" : "h2.example.com",
-      "resourceCategory" : "NET",
-      "resourceDescription" : "Domain for h2.example.com",
-      "resourceName" : "h2.example.com",
-      "reverseName" : "com.example.h2"
     }
   }, {
     "resource" : "Machine | h1.example.com | h1.example.com (192.168.0.200)",
